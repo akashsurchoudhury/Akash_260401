@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 struct Student {
     int rollno;
@@ -8,13 +7,11 @@ struct Student {
     float marks;
 };
 
-void sortByMarks(struct Student* students, int size) {
-    struct Student temp;
-
+void sortStudentsByMarks(struct Student* students, int size) {
     for (int i = 0; i < size - 1; i++) {
         for (int j = 0; j < size - i - 1; j++) {
             if (students[j].marks < students[j + 1].marks) {
-                temp = students[j];
+                struct Student temp = students[j];
                 students[j] = students[j + 1];
                 students[j + 1] = temp;
             }
@@ -34,18 +31,33 @@ int main() {
         return 0;
     }
 
-    printf("\nEnter student details:\n");
-
+    printf("\nEnter details of students:\n");
     for (int i = 0; i < size; i++) {
-        printf("Enter details for student %d:\n", i + 1);
-        printf("Roll No: ");
+        printf("\nStudent %d:\n", i + 1);
+
+        printf("Enter roll number: ");
         scanf("%d", &students[i].rollno);
-        printf("Name: ");
+
+        printf("Enter name: ");
         scanf("%s", students[i].name);
-        printf("Marks: ");
+
+        printf("Enter marks: ");
         scanf("%f", &students[i].marks);
     }
 
-    sortByMarks(students, size);
+    printf("\nStudents before sorting:\n");
+    for (int i = 0; i < size; i++) {
+        printf("Roll Number: %d, Name: %s, Marks: %.2f\n", students[i].rollno, students[i].name, students[i].marks);
+    }
 
-    printf("\nStudent Details (Sorted by
+    sortStudentsByMarks(students, size);
+
+    printf("\nStudents after sorting (descending order by marks):\n");
+    for (int i = 0; i < size; i++) {
+        printf("Roll Number: %d, Name: %s, Marks: %.2f\n", students[i].rollno, students[i].name, students[i].marks);
+    }
+
+    free(students);
+    return 0;
+}
+
